@@ -4,8 +4,9 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import fileUpload from 'express-fileupload';
 import { dbconnection } from './database/dbconnection.js';
-import messageRouter from './router/messageRouter.js'
-import {errorMiddleware} from "./middleware/errorMiddleware.js"
+import messageRouter from './router/messageRouter.js';
+import {errorMiddleware} from "./middleware/errorMiddleware.js";
+import userRouter from "./router/userRouter.js"
 
 const app = express();
 config({path: "./config/config.env"});
@@ -28,6 +29,7 @@ app.use(fileUpload({
     tempFileDir:"/tmp/"
 }))
 app.use("/api/v1/message", messageRouter)
+app.use("/api/v1/user", userRouter)
 dbconnection();
 
 app.use(errorMiddleware);
