@@ -1,10 +1,10 @@
-import { catchAsyncerror } from "../middleware/catchAsyncerror.js"
+import { catchAsyncErrors } from "../middleware/catchAsyncerror.js"
 import ErrorHandler from "../middleware/errorMiddleware.js"
 import { User } from "../models/userSchema.js";
 import { generateTokens } from "../utils/jwtTokens.js"
 import cloudinary from "cloudinary"
 
-export const pateintRegister = catchAsyncerror(async (req, res, next) => {
+export const pateintRegister = catchAsyncErrors(async (req, res, next) => {
     const { firstName, lastName, email, phone, password, gender, dob, nic, role } = req.body;
 
 
@@ -25,7 +25,7 @@ export const pateintRegister = catchAsyncerror(async (req, res, next) => {
 
 
 
-export const login = catchAsyncerror(async (req, res, next) => {
+export const login = catchAsyncErrors(async (req, res, next) => {
     const { email, password, confirmPassword, role } = req.body;
 
     if (!email || !password || !confirmPassword || !role) {
@@ -54,7 +54,7 @@ export const login = catchAsyncerror(async (req, res, next) => {
     // });
 });
 
-export const addNewAdmin = catchAsyncerror(async (req, res, next) => {
+export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
     const { firstName, lastName, email, phone, password, gender, dob, nic } = req.body;
 
 
@@ -74,7 +74,7 @@ export const addNewAdmin = catchAsyncerror(async (req, res, next) => {
 });
 
 
-export const getAllDoctors = catchAsyncerror(async (req, res, next) => {
+export const getAllDoctors = catchAsyncErrors(async (req, res, next) => {
     const doctors = await User.find({ role: "Doctor" })
     res.status(200).json({
         success: true,
@@ -83,7 +83,7 @@ export const getAllDoctors = catchAsyncerror(async (req, res, next) => {
 });
 
 
-export const getuserDetails = catchAsyncerror(async (req, res, next) => {
+export const getuserDetails = catchAsyncErrors(async (req, res, next) => {
     const user = req.user;
     res.status(200).json({
         success: true,
@@ -91,7 +91,7 @@ export const getuserDetails = catchAsyncerror(async (req, res, next) => {
     });
 });
 
-export const logoutAdmin = catchAsyncerror(async (req, res, next) => {
+export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {
     res.status(200).cookie("adminToken", "", {
         httpOnly: true,
         expires: new Date(Date.now())
@@ -103,7 +103,7 @@ export const logoutAdmin = catchAsyncerror(async (req, res, next) => {
 
 
 
-export const logoutPatient = catchAsyncerror(async (req, res, next) => {
+export const logoutPatient = catchAsyncErrors(async (req, res, next) => {
     res.status(200).cookie("patientToken", "", {
         httpOnly: true,
         expires: new Date(Date.now())
@@ -114,7 +114,7 @@ export const logoutPatient = catchAsyncerror(async (req, res, next) => {
 });
 
 
-export const addNewDoctor = catchAsyncerror(async (req, res, next) => {
+export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     // Check if the file is present in the request
     if (!req.files || Object.keys(req.files).length === 0) {
         return next(new ErrorHandler("Doctor Avatar Required!", 400));

@@ -1,8 +1,8 @@
 import { Message } from "../models/messageSchema.js";
-import { catchAsyncerror } from "../middleware/catchAsyncerror.js"
+import {catchAsyncErrors } from "../middleware/catchAsyncerror.js"
 import ErrorHandler from "../middleware/errorMiddleware.js"
 
-export const sendMessage = catchAsyncerror(async (req, res, next) => {
+export const sendMessage = catchAsyncErrors(async (req, res, next) => {
     const { firstName, lastName, email, phone, message } = req.body;
 
     if (!firstName || !lastName || !email || !phone || !message) {
@@ -17,7 +17,7 @@ export const sendMessage = catchAsyncerror(async (req, res, next) => {
 });
 
 
-export const getAllMessage = catchAsyncerror(async (req, res, next) => {
+export const getAllMessage = catchAsyncErrors(async (req, res, next) => {
     const messages = await Message.find();
     res.status(200).json({
         success: true,
