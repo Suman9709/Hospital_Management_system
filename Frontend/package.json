@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "axios": "^1.7.5",
+    "react-multi-carousel": "^2.8.5",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.26.1"
+  }
+}
